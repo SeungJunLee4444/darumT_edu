@@ -1,0 +1,3 @@
+## 깃 붙여넣기 단축키
+
+ctrl + shift + insert(end)
