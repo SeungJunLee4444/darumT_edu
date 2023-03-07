@@ -1,9 +1,0 @@
-# ipconfig/all
-mac 물리적 주소 확인 가능
-
-# who
-해당 유저의 ip 접속여부 확인
-
-# netstat -an
-- tcp의 3-웨이 핸드세이킹 여부를 확인 가능
-* 로컬주소와 외부주소(ip와 포트번호) 확인, 성공시 established상태가 된다
