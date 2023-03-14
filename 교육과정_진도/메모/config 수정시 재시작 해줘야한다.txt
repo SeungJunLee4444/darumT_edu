@@ -1,0 +1,2 @@
+config 수정 : vi편집기
+재시작 : systemctl restart 서비스명

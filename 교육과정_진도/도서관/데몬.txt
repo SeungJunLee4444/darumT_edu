@@ -1,0 +1,14 @@
+## 데몬
+
+# 데몬 개념
+- 리눅스시스템이 시작될 때 실행되는 백그라운드 프로그램을 말함
+- 데몬은 프로세스명이 d로 끝난다
+ ex) vsftpd, sshd 등
+
+# 명령어(7, 8버전 기준)
+1. 조회			: systemctl status 서비스명
+2. 시작			: systemctl start 서비스명
+3. 정지			: systemctl stop 서비스명
+4. 재시작			: systemctl restart 서비스명
+5. 자동시작 		: systemctl enable 서비스명
+6. 자동시작 비활성화		: systemcl disable 서비스명

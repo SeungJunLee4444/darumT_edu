@@ -1,0 +1,82 @@
+## 리눅스 파티션 생성 및 파일시스템
+
+# 용어
+pv : 각각의 파티션을 나눈것
+pe : s
+VG : PV로 되어있는 파티션을 그룹으로 설정
+LV : 마운트 포인터로 사용할 수 있는 실질적인 파티션
+
+
+
+# 순서
+* sdc : 장치명 sdc1 : 파티션명
+
+
+1. 물리디스크 생성 
+	(1) 서버종료	: shutdown -h now
+	(2) 하드디스크 추가 : sata, 용량 설정
+	(3) 생성 조회	: fdisk -l (장치명 조회가능, /dev/sdc )
+
+2. 파티션생성
+	(1) 파티션 설정창 ->: fdisk /dev/sdc (조회한 물리디스크 장치명)
+		(1) n	: 새로운 파티션 생성
+		(2) p	: primary p 만들기
+		(3) 1	: 파티션 넘버
+		(4) 섹터	: 
+		(5) 타입변경 : t -8e	( L : 도움말 ) p로 확인
+		(6) w		: 나가기
+		(7) fdisk -l 	: 해당 장치에 파티션 여부 확인가능
+
+3. 물리 볼륨
+	(1) pvcreate /dev/sdc1 (파티션명) 	: 물리볼륨 만들기
+	(2) pvs				: 물리볼륨 조회	( 볼륨그룹, vg 가 없는 상태로 조회)
+
+
+볼룸그룹 만들기 
+	(1) vgs			: 볼룸그룹 조회
+	(2) vgcreate 그룹명 /파티션	: 볼룸그룹 생성 및 파티션 할당
+
+4. 볼륨그룹 확장
+	(1) vgextend vg0 /dev/sdc1  		: vg0에 sdc1파티셔닝 들어감
+	(2) vgisplay -v vg0 | more		: vg0 조회
+	(3) mkfs.xfs /dev/vg0/lv_data2	: 파일시스템 사용가능하게 만들기
+
+
+5. 논리볼륨
+	(1) mkdir 			: 디렉토리 생성
+	(1) lvcreate -L 10G -n LV_data2 vg0	: 논리볼륨 만들기
+	(3) 마운트				: 디렉토리와 논리볼륨 마운트
+		- df -Tr			: 마운트 여부 확인
+	(4) 자동마운트	
+		- vi /etc/fstab		: 
+		- ex 모드에서 .! df -Th	:
+		- 가장 마지막		
+		- 조회			: df -Th ( df : 마운트된 파일시스템 조회)
+		
+		* 마운트가 잘 안되면 os부팅에 오류가 생기니 주의 
+
+
+
+
+
+
+
+# 확장
+vgdisplay -v vg0 	: 볼륨그룹 조회
+
+1. 마운트 해제 : umount /디렉토리명
+
+2. 파티션 추가
+- lvextend -L +2G /dev/vgo/lv_data
+- lvextend -l +100%FREE /dev/vg01/lv01
+
+3. 마운트
+- mount /dev/vg0/lv_data /data1	: 파일시스템 디렉토리
+
+4. 리사이징 
+xfs_grows /dev/vg0/lv_data		: 파일시스템 체크(쓸수있는지) + 리사이징 *
+resize2fs -p /dev/vg01/lv01		: 이전버전 리사이징
+
+5. 
+pvcreate /dev/sdd
+vgextend vg00 /dev/sdd

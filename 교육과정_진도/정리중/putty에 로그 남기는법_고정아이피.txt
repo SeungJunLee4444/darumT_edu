@@ -1,0 +1,10 @@
+## putty에 로그 저장하는법
+
+# 순서
+1. putty - session - logging
+2. txt 파일 생성
+3. 불러오기 + \&Y&M&D&T_&H.log 붙이기
+4. 설정 printable output + always append to the end of it
+5. session - 새로운 이름 + 아이피입력 - save 버튼 누르기
+
+* 마지막에 session에 save하면 모든 변경된 설정이 저장된 고정아이디가 생성된다
